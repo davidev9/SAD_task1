@@ -1,10 +1,13 @@
 package com.groom.manvsclass.controller;
 
+import java.awt.PageAttributes.MediaType;
 import java.io.IOException;
+import java.net.http.HttpHeaders;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -12,19 +15,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.groom.manvsclass.api.upload.FileUploadResponse;
 import com.groom.manvsclass.api.upload.FileUploadUtil;
+import com.groom.manvsclass.api.download.FileDownloadUtil;
 import com.groom.manvsclass.model.ClassUT;
 import com.groom.manvsclass.repository.ClassRepository;
-import com.groom.manvsclass.repository.SearchRepository;
+
 import com.groom.manvsclass.repository.SearchRepositoryImpl;
 
-import jakarta.servlet.http.HttpServletResponse;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 public class PostController {
@@ -62,7 +65,7 @@ public class PostController {
 		response.setSize(size);
 		response.setDownloadUri("/downloadFile");
 		
-		classe.setUri("/downloadFile"+fileName);
+		classe.setUri("Files-Upload/"+classe.getName()+"/"+fileName);
 		classe.setDate(today.toString());
 		repo.save(classe);
 		return new ResponseEntity<>(response,HttpStatus.OK);
@@ -95,6 +98,14 @@ public class PostController {
 		return srepo.filterByCategory(category);
 	}
 	
+	 @GetMapping("/downloadFile/{name}")
+	    public ResponseEntity<?> downlFile(@PathVariable("name") String name) throws Exception {
+		 	   List<ClassUT> classe= srepo.findByText(name);
+	           return FileDownloadUtil.downloadClassFile(classe.get(0).getcode_Uri());
+	    }
+	 
+	 
+	 
 	
 	/*
 	@PostMapping("/uploadFile")
