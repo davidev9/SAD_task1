@@ -83,6 +83,19 @@ public class PostController {
 	}
 	
 	
+	@GetMapping("/filterby/{text}/{category}")
+	public	List<ClassUT>	searchAndFilter(@PathVariable String text,@PathVariable String category)
+	{
+		return srepo.searchAndFilter(text,category);
+	}
+
+	@GetMapping("filterby/{category}")
+	public List<ClassUT> filterby(@PathVariable String category)
+	{
+		return srepo.filterByCategory(category);
+	}
+	
+	
 	/*
 	@PostMapping("/uploadFile")
 	public ResponseEntity<FileUploadResponse> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException
