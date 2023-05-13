@@ -18,18 +18,36 @@ import com.mongodb.client.MongoDatabase;
 @Component
 public class SearchRepositoryImpl {
 
-	/*
-	public SearchRepositoryImpl()
-	{
-		
-	}
-	*/
 	@Autowired
     MongoClient client;
-
+ 
     @Autowired
     MongoConverter converter;
 
+    public List<ClassUT> searchAndFilter(String text, String category) {
+
+        final List<ClassUT> posts = new ArrayList<>();
+
+        MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("ClassUT");
+
+        AggregateIterable<Document> result = collection.aggregate(
+                Arrays.asList(
+                        new Document("$search",
+                                new Document("index", "default")
+                                        .append("text",
+                                                new Document("query", text)
+                                                        .append("path", Arrays.asList("name", "description")))),
+                        new Document("$match",
+                                new Document("category", category))
+                )
+        );
+
+        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+
+        return posts;
+    }
+    
     
     public List<ClassUT> findByText(String text) {
 
@@ -38,19 +56,38 @@ public class SearchRepositoryImpl {
         MongoDatabase database = client.getDatabase("manvsclass");
         MongoCollection<Document> collection = database.getCollection("ClassUT");
 
-        
-        
-
-        
-        
-        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$search", 
-        	    new Document("index", "default")
-	            .append("text", 
-	    new Document("query", "Classe01")
-	                .append("path", Arrays.asList("name", "description"))))));
+        AggregateIterable<Document> result = collection.aggregate(
+            Arrays.asList(
+                new Document("$search", 
+                    new Document("text", 
+                        new Document("query", text)
+                        .append("path", Arrays.asList("name", "description"))
+                    )
+                )
+            )
+        );
 
         result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
 
         return posts;
     }
+    
+    public List<ClassUT> filterByCategory(String category) {
+
+        final List<ClassUT> posts = new ArrayList<>();
+
+        MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("ClassUT");
+        
+        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$search", 
+        	    new Document("index", "default")
+                .append("text", 
+        new Document("query", category)
+                    .append("path", "category")))));
+        
+        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+
+        return posts;
+    }
+    
 }

@@ -9,17 +9,16 @@ public class ClassUT {
 	private String	name;
 	private String	date;
 	private	String	difficulty;
-	private	String	code_url;
+	private String code_Uri;
 	private	String	description;
-	//private	Strings	category[];
 	private List<String> category;
 	
 	
-	public ClassUT(String name, String date,String description, String difficulty, String code_url,List<String> category) {
+	public ClassUT(String name, String date,String description, String difficulty, String code_Uri,List<String> category) {
         this.name = name;
         this.date = date;
         this.difficulty = difficulty;
-        this.code_url = code_url;
+        this.code_Uri = code_Uri;
         this.description=description;
         this.category = category;
     }
@@ -29,11 +28,30 @@ public class ClassUT {
 		
 	}
 	
+	public List<String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<String> category) {
+        this.category = category;
+    }
+    
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setcode_Uri(String code_Uri) {
+		this.code_Uri = code_Uri;
+	}
+	
+	public String getcode_Uri() {
+		return this.code_Uri;
+	}
+	public void setUri(String code_Uri) {
+		this.code_Uri = code_Uri;
 	}
 	public String getDate() {
 		return date;
@@ -47,12 +65,7 @@ public class ClassUT {
 	public void setDifficulty(String difficulty) {
 		this.difficulty = difficulty;
 	}
-	public String getCode_url() {
-		return code_url;
-	}
-	public void setCode_url(String code_url) {
-		this.code_url = code_url;
-	}
+	
 	
 	
 	
@@ -62,7 +75,7 @@ public class ClassUT {
 	            "name='" + name + '\'' +
 	            ", date='" + date + '\'' +
 	            ", difficulty='" + difficulty + '\'' +
-	            ", code_url='" + code_url + '\'' +
+	            ", code_url='" + code_Uri + '\'' +
 	            ", category=" + category +
 	            '}';
 	}
