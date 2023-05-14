@@ -1,4 +1,11 @@
 package com.groom.manvsclass.controller;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+//import com.concretepage.config.MongoDBConfig;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -32,6 +39,9 @@ public class PostController {
 	@Autowired
 	ClassRepository repo;
 	
+	 @Autowired
+	    private MongoTemplate mongoTemplate;
+	
 	private final LocalDate today = LocalDate.now();
 	private final SearchRepositoryImpl srepo;
 	
@@ -41,7 +51,7 @@ public class PostController {
 	}
 	
 	@GetMapping("/home")
-	public	List<ClassUT>	getAllClasses()
+	public	List<ClassUT> getAllClasses()
 	{
 		return repo.findAll();
 	}
@@ -94,6 +104,21 @@ public class PostController {
 	{
 		return srepo.filterByCategory(category);
 	}
+	
+	@PostMapping("update/{name}")
+	public void updateFile(@PathVariable String name, @RequestBody ClassUT newContent) {
+		Query query= new Query();
+		
+	   query.addCriteria(Criteria.where("name").is(name));
+	    Update update = new Update().set("name", newContent.getName())
+                .set("date", newContent.getDate())
+                .set("difficulty", newContent.getDifficulty())
+                .set("description", newContent.getDescription())
+                .set("category", newContent.getCategory());
+	    mongoTemplate.updateFirst(query, update, ClassUT.class);
+	
+	} 
+	
 	
 	
 	/*

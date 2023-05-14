@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.groom.manvsclass.model.ClassUT;
@@ -91,6 +93,9 @@ public class SearchRepositoryImpl {
 
         return posts;
     }
+
+
+
     
     
 }
