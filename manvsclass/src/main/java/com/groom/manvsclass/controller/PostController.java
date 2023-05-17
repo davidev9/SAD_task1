@@ -35,6 +35,9 @@ public class PostController {
 	@Autowired
 	ClassRepository repo;
 	
+	@Autowired
+    private MongoTemplate mongoTemplate;
+	
 	private final LocalDate today = LocalDate.now();
 	private final SearchRepositoryImpl srepo;
 	
@@ -104,6 +107,19 @@ public class PostController {
 	           return FileDownloadUtil.downloadClassFile(classe.get(0).getcode_Uri());
 	    }
 	 
+	 @PostMapping("update/{name}")
+		public void updateFile(@PathVariable String name, @RequestBody ClassUT newContent) {
+			Query query= new Query();
+			
+		   query.addCriteria(Criteria.where("name").is(name));
+		    Update update = new Update().set("name", newContent.getName())
+	                .set("date", newContent.getDate())
+	                .set("difficulty", newContent.getDifficulty())
+	                .set("description", newContent.getDescription())
+	                .set("category", newContent.getCategory());
+		    mongoTemplate.updateFirst(query, update, ClassUT.class);
+		
+		} 
 	 
 	 
 	
