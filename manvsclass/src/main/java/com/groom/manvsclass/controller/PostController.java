@@ -4,8 +4,11 @@ package com.groom.manvsclass.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -116,10 +119,16 @@ public class PostController {
 	                .set("description", newContent.getDescription())
 	                .set("category", newContent.getCategory());
 		    mongoTemplate.updateFirst(query, update, ClassUT.class);
-		
 		} 
-	 
-	
+
+
+@PostMapping("delete/{name}")
+		public ClassUT eliminaFile(@PathVariable String name) {
+			Query query= new Query(); 
+		   query.addCriteria(Criteria.where("name").is(name));
+		   return mongoTemplate.findAndRemove(query, ClassUT.class);
+		} 
+
 	/*
 	@PostMapping("/uploadFile")
 	public ResponseEntity<FileUploadResponse> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException
