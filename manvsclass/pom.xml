@@ -34,7 +34,10 @@
 		
 		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
 		
-
+	<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
 
 	</dependencies>
 

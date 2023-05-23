@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ClassUT List</title>
+</head>
+<body>
+    <h1>ClassUT List</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Difficulty</th>
+            <th>Code URI</th>
+            <th>Description</th>
+            <th>Category</th>
+        </tr>
+        <tr th:each="classUT : ${classUTList}">
+            <td th:text="${classUT.name}"></td>
+            <td th:text="${classUT.date}"></td>
+            <td th:text="${classUT.difficulty}"></td>
+            <td th:text="${classUT.code_Uri}"></td>
+            <td th:text="${classUT.description}"></td>
+            <td th:text="${classUT.category}"></td>
+        </tr>
+    </table>
+</body>
+</html>
