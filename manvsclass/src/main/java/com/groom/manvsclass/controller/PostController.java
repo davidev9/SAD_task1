@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,12 +54,20 @@ public class PostController {
 	{
 		return repo.findAll();
 	}
+	
+	@GetMapping("/classut")
+	public	List<ClassUT>	estraiCddlassi()
+	{
+		return repo.findAll();
+	}
 
 	@GetMapping("filterby/{category}")
 	public List<ClassUT> estraiClassi(@PathVariable String category)
 	{
 		return srepo.filterByCategory(category);
 	}
+	
+	
 
 	@GetMapping("/filterby/{text}/{category}")
 	public	List<ClassUT>	estraiClassi(@PathVariable String text,@PathVariable String category)
