@@ -50,19 +50,15 @@ public class PostController {
 	}
 
 	@GetMapping("/home")
-	public	List<ClassUT>	estraiClassi()
+	public	List<ClassUT>	elencaClassi()
 	{
 		return repo.findAll();
 	}
 	
-	@GetMapping("/classut")
-	public	List<ClassUT>	estraiCddlassi()
-	{
-		return repo.findAll();
-	}
+	
 
 	@GetMapping("filterby/{category}")
-	public List<ClassUT> estraiClassi(@PathVariable String category)
+	public List<ClassUT> elencaClassi(@PathVariable String category)
 	{
 		return srepo.filterByCategory(category);
 	}
@@ -70,7 +66,7 @@ public class PostController {
 	
 
 	@GetMapping("/filterby/{text}/{category}")
-	public	List<ClassUT>	estraiClassi(@PathVariable String text,@PathVariable String category)
+	public	List<ClassUT>	elencaClassi(@PathVariable String text,@PathVariable String category)
 	{
 		return srepo.searchAndFilter(text,category);
 	}

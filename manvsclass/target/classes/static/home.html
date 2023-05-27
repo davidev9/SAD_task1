@@ -114,46 +114,51 @@ a:hover {
 <div class="container">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
+ <div class="container-fluid">
     <a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
   <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
 </svg></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-     
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Sort by
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-         
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-		
-		<li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Filters
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-         
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">&nbsp 
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
+  <a class="navbar-brand" href="#">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="sortByDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort By
+        </a>
+        <div class="dropdown-menu" aria-labelledby="sortByDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="filterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Filters
+        </a>
+        <div class="dropdown-menu" aria-labelledby="filterDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
 </nav>
 
@@ -182,12 +187,13 @@ a:hover {
 					
 					
 					
+	
 					
 					
 					
+										
 					
-					
-					<div class="col-lg-3 col-md-4 col-sm-12">
+<div class="col-lg-3 col-md-4 col-sm-12">
 <div class="card">
 <div class="file">
 <a href="javascript:void(0);">
@@ -212,14 +218,18 @@ a:hover {
 </div>
 <div class="file-name">
 <p class="m-b-5 text-muted">${home.name}.java</p>
-<p class=" class="card-text text-truncate">${home.description}</p>
+
+<small class="date text-muted">${home.description} </small>
+
+
+
 <small class="date text-success">${home.difficulty}<span class="date text-muted">${home.date}</span></small>
 
 <center><span class="badge badge-info">${home.category[0]}</span> <span class="badge badge-info">${home.category[1]}</span> <span class="badge badge-info">${home.category[2]}</span> </center>
 <center><span>
 <br>
 
-<button type="button" class="btn btn-success btn-sm">
+<button type="button" onclick="fetch("home/${home}")"  class="btn btn-success btn-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"></path>
 </svg>
@@ -235,10 +245,6 @@ a:hover {
 </div>
 </div>
 </div>
-					
-					
-					
-					
 					
 					
 					
