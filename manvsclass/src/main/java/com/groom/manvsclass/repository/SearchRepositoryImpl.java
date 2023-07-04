@@ -74,6 +74,7 @@ public class SearchRepositoryImpl {
 
         return posts;
     }
+    
     public List<ClassUT> filterByCategory(String category) {
 
         final List<ClassUT> posts = new ArrayList<>();
@@ -92,5 +93,87 @@ public class SearchRepositoryImpl {
         return posts;
     }
     
+    
+    public List<ClassUT> orderByDate() {
+
+        final List<ClassUT> posts = new ArrayList<>();
+
+        MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("ClassUT");
+		
+		AggregateIterable<Document> result = collection.aggregate(
+	    Arrays.asList(
+	        new Document("$sort",
+	            new Document("date", 1)
+	        	)
+	    	)
+		);
+
+        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+
+        return posts;
+    }
+    
+    public List<ClassUT> orderByName() {
+
+        final List<ClassUT> posts = new ArrayList<>();
+
+        MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("ClassUT");
+		
+		AggregateIterable<Document> result = collection.aggregate(
+	    Arrays.asList(
+	        new Document("$sort",
+	            new Document("name", 1)
+	        	)
+	    	)
+		);
+
+        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+
+        return posts;
+    }
+    
+        public List<ClassUT> filterByDifficulty(String difficulty) {
+
+        final List<ClassUT> posts = new ArrayList<>();
+
+        MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("ClassUT");
+
+        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$search", 
+        	    new Document("index", "default")
+                .append("text", 
+        new Document("query", difficulty)
+                    .append("path", "difficulty")))));
+
+        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+
+        return posts;
+    }
+        
+        public List<ClassUT> searchAndDFilter(String text, String difficulty) {
+
+            final List<ClassUT> posts = new ArrayList<>();
+
+            MongoDatabase database = client.getDatabase("manvsclass");
+            MongoCollection<Document> collection = database.getCollection("ClassUT");
+
+            AggregateIterable<Document> result = collection.aggregate(
+                    Arrays.asList(
+                            new Document("$search",
+                                    new Document("index", "default")
+                                            .append("text",
+                                                    new Document("query", text)
+                                                            .append("path", Arrays.asList("name", "description")))),
+                            new Document("$match",
+                                    new Document("difficulty", difficulty))
+                    )
+            );
+
+            result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+
+            return posts;
+        }    
     
 }
