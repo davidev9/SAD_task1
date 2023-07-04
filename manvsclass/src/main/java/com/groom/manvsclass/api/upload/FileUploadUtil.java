@@ -42,6 +42,27 @@ public class FileUploadUtil {
 			Files.copy(inputStream,filePath,StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
+
+	public static void deleteDirectory(File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    if (!file.delete()) {
+                        throw new IOException("Impossibile eliminare il file: " + file.getAbsolutePath());
+                    }
+                }
+            }
+        }
+        else {
+        	directory.delete();
+        }
+        if (!directory.delete()) {
+            throw new IOException("Impossibile eliminare la cartella: " + directory.getAbsolutePath());
+        }
+    }
 	
 }
 

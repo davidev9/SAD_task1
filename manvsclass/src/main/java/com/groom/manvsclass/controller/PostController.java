@@ -103,6 +103,7 @@ public class PostController {
 	public ClassUT eliminaClasse(@PathVariable String name) {
 		Query query= new Query(); 
 	   query.addCriteria(Criteria.where("name").is(name));
+	   this.eliminaFile(name);
 	   return mongoTemplate.findAndRemove(query, ClassUT.class);
 	}
 
@@ -113,7 +114,7 @@ public class PostController {
 	        File folderToDelete = new File(folderPath);
 	        if (folderToDelete.exists() && folderToDelete.isDirectory()) {
 	        	try {
-	                deleteDirectory(folderToDelete);
+	        		FileUploadUtil.deleteDirectory(folderToDelete);
 	                return new ResponseEntity<>("Cartella eliminata con successo.", HttpStatus.OK);
 	            } catch (IOException e) {
 	                return new ResponseEntity<>("Impossibile eliminare la cartella.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -122,27 +123,8 @@ public class PostController {
 	            return new ResponseEntity<>("Cartella non trovata.", HttpStatus.NOT_FOUND);
 	        }
 	 }
-	//Da spostare    
-	private void deleteDirectory(File directory) throws IOException {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    if (!file.delete()) {
-                        throw new IOException("Impossibile eliminare il file: " + file.getAbsolutePath());
-                    }
-                }
-            }
-        }
-        else {
-        	directory.delete();
-        }
-        if (!directory.delete()) {
-            throw new IOException("Impossibile eliminare la cartella: " + directory.getAbsolutePath());
-        }
-    }
+	    
+	
 
 	
 	@GetMapping("/home/{text}")
@@ -155,6 +137,7 @@ public class PostController {
 	@GetMapping("/downloadFile/{name}")
 	    public ResponseEntity<?> downloadClasse(@PathVariable("name") String name) throws Exception {
 		 	   List<ClassUT> classe= srepo.findByText(name);
+		 	   
 	           return FileDownloadUtil.downloadClassFile(classe.get(0).getcode_Uri());
 	    }
 	 
