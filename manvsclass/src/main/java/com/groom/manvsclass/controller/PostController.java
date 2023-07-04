@@ -55,21 +55,42 @@ public class PostController {
 		return repo.findAll();
 	}
 	
-	
+	@GetMapping("orderbydate")
+	public List<ClassUT> ordinaClassi()
+	{
+		return srepo.orderByDate();
+	}
 
-	@GetMapping("filterby/{category}")
+	@GetMapping("orderbyname")
+	public List<ClassUT> ordinaClassiNomi()
+	{
+		return srepo.orderByName();
+	}
+	
+	@GetMapping("Cfilterby/{category}")
 	public List<ClassUT> elencaClassi(@PathVariable String category)
 	{
 		return srepo.filterByCategory(category);
 	}
 	
-	
-
-	@GetMapping("/filterby/{text}/{category}")
+	@GetMapping("/Cfilterby/{text}/{category}")
 	public	List<ClassUT>	elencaClassi(@PathVariable String text,@PathVariable String category)
 	{
 		return srepo.searchAndFilter(text,category);
 	}
+	
+	@GetMapping("Dfilterby/{difficulty}")
+	public List<ClassUT> elencaClassiD(@PathVariable String difficulty)
+	{
+		return srepo. filterByDifficulty(difficulty);
+	}
+	
+	@GetMapping("/Dfilterby/{text}/{difficulty}")
+	public	List<ClassUT>	elencaClassiD(@PathVariable String text,@PathVariable String difficulty)
+	{
+		return srepo.searchAndDFilter(text,difficulty);
+	}
+	
 
 	@PostMapping("/insert")
 	public ClassUT UploadClasse(@RequestBody ClassUT classe)
