@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Component;
 
 import com.groom.manvsclass.model.ClassUT;
+import com.groom.manvsclass.model.interaction;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -54,6 +55,26 @@ public class SearchRepositoryImpl {
         	count = 0;
         }
         return count;
+    }
+    
+    public List<interaction> findReport() {
+
+        final List<interaction> posts = new ArrayList<>();
+
+        MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("interaction");
+
+        AggregateIterable<Document> result = collection.aggregate(
+            Arrays.asList(
+    		 new Document("$match",
+     	            new Document("type", 0)
+     	        )
+            )
+        );
+
+        result.forEach(doc -> posts.add(converter.read(interaction.class,doc)));
+
+        return posts;
     }
     
     public List<ClassUT> findByText(String text) {

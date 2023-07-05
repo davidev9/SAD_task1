@@ -62,6 +62,11 @@ public class PostController {
 		return repo_int.findAll();
 	}
 	
+	@GetMapping("/report")
+	public	List<interaction> elencaReport()
+	{
+		return srepo.findReport();
+	}
 	
 	//Solo x testing
 	@GetMapping("/getLikes/{name}")
