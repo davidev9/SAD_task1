@@ -70,13 +70,11 @@ public class PostController {
 	
 	//Solo x testing
 	@GetMapping("/getLikes/{name}")
-	public String likes(@PathVariable String name)
+	public long likes(@PathVariable String name)
 	{
 		long likes=srepo.getLikes(name);
 		
-		String risultato="Num Like:'"+likes;
-		
-		return risultato;
+		return likes;
 	}
 	
 	@PostMapping("/newinteraction")
