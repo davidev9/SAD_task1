@@ -55,19 +55,19 @@ public class PostController {
 		return repo.findAll();
 	}
 	
-	@GetMapping("orderbydate")
+	@GetMapping("/orderbydate")
 	public List<ClassUT> ordinaClassi()
 	{
 		return srepo.orderByDate();
 	}
 
-	@GetMapping("orderbyname")
+	@GetMapping("/orderbyname")
 	public List<ClassUT> ordinaClassiNomi()
 	{
 		return srepo.orderByName();
 	}
 	
-	@GetMapping("Cfilterby/{category}")
+	@GetMapping("/Cfilterby/{category}")
 	public List<ClassUT> elencaClassi(@PathVariable String category)
 	{
 		return srepo.filterByCategory(category);
@@ -79,7 +79,7 @@ public class PostController {
 		return srepo.searchAndFilter(text,category);
 	}
 	
-	@GetMapping("Dfilterby/{difficulty}")
+	@GetMapping("/Dfilterby/{difficulty}")
 	public List<ClassUT> elencaClassiD(@PathVariable String difficulty)
 	{
 		return srepo. filterByDifficulty(difficulty);
@@ -120,7 +120,7 @@ public class PostController {
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
-	@PostMapping("delete/{name}")
+	@PostMapping("/delete/{name}")
 	public ClassUT eliminaClasse(@PathVariable String name) {
 		Query query= new Query(); 
 	   query.addCriteria(Criteria.where("name").is(name));
