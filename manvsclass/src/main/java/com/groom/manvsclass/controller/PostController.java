@@ -62,14 +62,21 @@ public class PostController {
 		return repo_int.findAll();
 	}
 	
+	@GetMapping("/report")
+	public	List<interaction> elencaReport()
+	{
+		return srepo.findReport();
+	}
 	
 	//Solo x testing
 	@GetMapping("/getLikes/{name}")
-	public long likes(@PathVariable String name)
+	public String likes(@PathVariable String name)
 	{
 		long likes=srepo.getLikes(name);
 		
-		return likes;
+		String risultato="Num Like:'"+likes;
+		
+		return risultato;
 	}
 	
 	@PostMapping("/newinteraction")
