@@ -14,6 +14,7 @@ public class ClassUT {
 	private List<String> category;
 	
 	
+	
 	public ClassUT(String name, String date,String description, String difficulty, String code_Uri,List<String> category) {
         this.name = name;
         this.date = date;
@@ -87,6 +88,7 @@ public class ClassUT {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+
 	    
 }

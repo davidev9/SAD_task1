@@ -14,6 +14,7 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 
 @Component
 public class SearchRepositoryImpl {
@@ -24,7 +25,36 @@ public class SearchRepositoryImpl {
     @Autowired
     MongoConverter converter;
 
-    
+    public long getLikes(String name) {
+    	MongoDatabase database = client.getDatabase("manvsclass");
+        MongoCollection<Document> collection = database.getCollection("interaction");
+        
+        AggregateIterable<Document> result = collection.aggregate(
+        	    Arrays.asList(
+        	        new Document("$search", 
+        	            new Document("text", 
+        	                new Document("query", name)
+        	                .append("path", Arrays.asList("name"))
+        	            )
+        	        ),
+        	        new Document("$match",
+        	            new Document("type", 1)
+        	        ),
+        	        new Document("$count", "count")
+        	    )
+        	);
+        long count =0;
+        if(result !=null) {
+        	Document firstResult = result.first();
+        	if (firstResult != null) {
+                count = ((Number) firstResult.get("count")).longValue();
+            }
+        }
+        else {
+        	count = 0;
+        }
+        return count;
+    }
     
     public List<ClassUT> findByText(String text) {
 

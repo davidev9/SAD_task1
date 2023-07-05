@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -27,8 +29,9 @@ import com.groom.manvsclass.api.upload.FileUploadResponse;
 import com.groom.manvsclass.api.upload.FileUploadUtil;
 import com.groom.manvsclass.api.download.FileDownloadUtil;
 import com.groom.manvsclass.model.ClassUT;
+import com.groom.manvsclass.model.interaction;
 import com.groom.manvsclass.repository.ClassRepository;
-
+import com.groom.manvsclass.repository.InteractionRepository;
 import com.groom.manvsclass.repository.SearchRepositoryImpl;
 
 
@@ -38,6 +41,10 @@ public class PostController {
 	
 	@Autowired
 	ClassRepository repo;
+	
+	@Autowired
+	InteractionRepository repo_int;
+	
 	@Autowired
     private MongoTemplate mongoTemplate; 
 	
@@ -48,7 +55,66 @@ public class PostController {
 	{
 		this.srepo=srepo;
 	}
+	
+	@GetMapping("/interaction")
+	public	List<interaction>	elencaInt()
+	{
+		return repo_int.findAll();
+	}
+	//Solo x testing
+	@GetMapping("/getLikes/{name}")
+	public String likes(@PathVariable String name)
+	{
+		long likes=srepo.getLikes(name);
+		
+		String risultato="Num Like:'"+likes;
+		
+		return risultato;
+	}
+	
+	@PostMapping("/newinteraction")
+	public interaction UploadInteraction(@RequestBody interaction interazione)
+	{
+		return repo_int.save(interazione);
+	}
 
+
+
+	public int API_id() {
+	    Random random = new Random();
+	    return random.nextInt(1000000 - 0 + 1) + 0;
+	}
+
+	
+	@PostMapping("/newlike/{name}")
+	public String newLike(@PathVariable String name) {
+	    interaction newInteraction = new interaction();
+	    //Finta chiamata all'API utente
+	    int id_u = API_id();
+	    LocalDate currentDate = LocalDate.now();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String data = currentDate.format(formatter);
+        
+	    newInteraction.setId(id_u);
+	    newInteraction.setName(name);
+	    newInteraction.setType(1);
+	    newInteraction.setDate(data);
+	   
+	    repo_int.save(newInteraction);
+
+	    return "Nuova interazione di tipo 'like' inserita per il nome: " + name;
+	}
+
+	
+	@PostMapping("/deleteint/{id_i}")
+	public interaction eliminaInteraction(@PathVariable int id_i) {
+		Query query= new Query(); 
+	   query.addCriteria(Criteria.where("id_i").is(id_i));
+	   //this.eliminaFile(id_i);
+	   return mongoTemplate.findAndRemove(query, interaction.class);
+	}
+	
+	
 	@GetMapping("/home")
 	public	List<ClassUT>	elencaClassi()
 	{
@@ -163,7 +229,7 @@ public class PostController {
 	    }
 	 
 
-@PostMapping("update/{name}")
+@PostMapping("/update/{name}")
 public ResponseEntity<String> modificaClasse(@PathVariable String name, @RequestBody ClassUT newContent) {
 			Query query= new Query();
 			
