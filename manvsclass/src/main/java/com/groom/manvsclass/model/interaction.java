@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "interaction")
 public class interaction {
 	private int id_i; //Id interazione
+	private String email; //Email utente
 	private String	name; //Id classe
 	private long id; //Id utente
 	private int type; //Tipo di interazione
@@ -14,8 +15,9 @@ public class interaction {
 	private String	date;
 	
 	
-	public interaction(int id_i, String name, long id, int type,String date) {
+	public interaction(int id_i,String email, String name, long id, int type,String date) {
 		this.setId_i(id_i);
+		this.setEmail(email);
 		this.setName(name);
 		this.setId(id);
 		this.setType(type);
@@ -54,10 +56,13 @@ public class interaction {
 	@Override
 	public String toString() {
 	    return "interaction{" +
+	    		"class_id= "+id_i+'\''+
 	    		"class_name='" + name+ '\''+
 	            "user_id='" + id + '\'' +
+	            "user_email="+email+'\''+
 	            ", type='" + type + '\'' +
 	            ", commento='" + commento + 
+	            "date="+date+'\''+
 	            '}';
 	}
 
@@ -82,5 +87,13 @@ public class interaction {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
