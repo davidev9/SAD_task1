@@ -118,14 +118,11 @@ a:hover {
 <div class="file">
 
 <br>
-<center><p class="h3">Modifica Classe</p></center>
+<center><p class="h3">Report Classe</p></center>
 <div class="icon">
 
 
-<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" class="bi bi-arrow-clockwise text-success" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-</svg>
+
 <br><br>
 </div>
 
@@ -172,11 +169,11 @@ var parametro = location.search.split('parametro=')[1];
 		<div class="file">
 
 <br>
-<center><p class="h3">Modifica Classe: ${home.name}</p></center>
+<center><p class="h3">Report Classe: ${home.name}</p></center>
 <div class="icon">
-<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" class="bi bi-arrow-clockwise text-success" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" class="bi bi-flag-fill text-danger" viewBox="0 0 16 16">
+  <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
 </svg>
 <br><br>
 </div>
@@ -187,55 +184,17 @@ var parametro = location.search.split('parametro=')[1];
 					<div class="card-body">
  <form id="uploadForm">
   <div class="mb-3">
-    <label for="className" class="form-label">Class name</label>
-    <input type="text" class="form-control" value="${home.name}" id="className" aria-describedby="classNameHelp">
-  </div>
-  
-<div class="mb-3">
-  <label for="date" class="form-label">Date</label>
-  <input type="date" class="form-control" id="date" aria-describedby="dateHelp" value="${new Date().toISOString().slice(0, 10)}">
-</div>
 
-  <div class="mb-3">
-  <label for="difficulty" class="form-label">Difficulty</label>
-  <select class="form-select" id="difficulty" value="${home.difficulty}" aria-describedby="difficultyHelp">
-    <option value="Beginner">Beginner</option>
-    <option value="Intermediate">Intermediate</option>
-    <option value="Advanced">Advanced</option>
-  </select>
-  <div id="difficultyHelp" class="form-text">Select the difficulty level of this item</div>
-</div>
   
   
   <div class="mb-3">
-    <label for="description" class="form-label" >Description</label>
+    <label for="description" class="form-label" >Comment</label>
     <textarea class="form-control" id="description" rows="3"    value="${home.description}" >${home.description}</textarea>
   </div>
   
 
-  
-  
-  
-  
-  <div class="mb-3">
-    <label for="category1" class="form-label"  >Category 1</label>
-    <input type="text" class="form-control" id="category1" value="${home.category[0]}" aria-describedby="categoryHelp">
-  </div>
-
-  <div class="mb-3">
-    <label for="category2" class="form-label" >Category 2</label>
-    <input type="text" class="form-control" value="${home.category[1]}" id="category2" aria-describedby="categoryHelp">
-  </div>
-
-  <div class="mb-3">
-    <label for="category3" class="form-label" value="${home.category[2]}">Category 3</label>
-    <input type="text" class="form-control" id="category3" value="${home.category[2]}" aria-describedby="categoryHelp">
-  </div>
-
-  
-
   <div class="col-12">
-    <button type="button" onclick="uploadFile()" class="btn btn-success">Upload</button>
+    <button type="button" onclick="uploadFile()" class="btn btn-success">Invia</button>
   </div>
 </form>
 
