@@ -62,7 +62,7 @@ public class PostController {
 		return repo_int.findAll();
 	}
 	
-	@GetMapping("/report")
+	@GetMapping("/findreport")
 	public	List<interaction> elencaReport()
 	{
 		return srepo.findReport();
@@ -89,33 +89,65 @@ public class PostController {
 	    Random random = new Random();
 	    return random.nextInt(1000000 - 0 + 1) + 0;
 	}
-
+	
+	public String API_email(int id_u) {
+		
+		String email = "prova."+id_u+"@email.com";
+		return email;
+	}
 	
 	@PostMapping("/newlike/{name}")
 	public String newLike(@PathVariable String name) {
 	    interaction newInteraction = new interaction();
 	    //Finta chiamata all'API utente
 	    int id_u = API_id();
+	    String email_u = API_email(id_u);
 	    LocalDate currentDate = LocalDate.now();
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String data = currentDate.format(formatter);
         
+        newInteraction.setId_i(0);
 	    newInteraction.setId(id_u);
+	    newInteraction.setEmail(email_u);
 	    newInteraction.setName(name);
 	    newInteraction.setType(1);
 	    newInteraction.setDate(data);
-	   
 	    repo_int.save(newInteraction);
 
-	    return "Nuova interazione di tipo 'like' inserita per il nome: " + name;
+	    return "Nuova interazione di tipo 'like' inserita per la classe: " + name;
 	}
+	
+	@PostMapping("/newReport/{name}")
+	public String newReport(@PathVariable String name, @RequestBody String commento ) {
+	    interaction newInteraction = new interaction();
+	    
+	    //Finta chiamata all'API utente
+	    int id_u = API_id();
+	    
+	    //Finta chiamata API email
+	    String email_u = API_email(id_u);
+	    
+	    //Generazione data del giorno
+	    LocalDate currentDate = LocalDate.now();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String data = currentDate.format(formatter);
+        
+        newInteraction.setId_i(0);
+	    newInteraction.setId(id_u);
+	    newInteraction.setEmail(email_u);
+	    newInteraction.setName(name);
+	    newInteraction.setType(0);
+	    newInteraction.setDate(data);
+	    newInteraction.setCommento(commento);
+	    repo_int.save(newInteraction);
 
+	    return "Nuova interazione di tipo 'report' inserita per la classe: " + name;
+	}
 	
 	@PostMapping("/deleteint/{id_i}")
 	public interaction eliminaInteraction(@PathVariable int id_i) {
 		Query query= new Query(); 
 	   query.addCriteria(Criteria.where("id_i").is(id_i));
-	   //this.eliminaFile(id_i);
 	   return mongoTemplate.findAndRemove(query, interaction.class);
 	}
 	
