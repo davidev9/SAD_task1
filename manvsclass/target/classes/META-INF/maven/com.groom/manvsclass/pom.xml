@@ -32,6 +32,11 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<dependency>
+    		<groupId>org.mongodb</groupId>
+   			<artifactId>mongo-java-driver</artifactId>
+    		<version>3.12.12</version> <!-- Aggiorna alla versione più recente -->
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
 		
     

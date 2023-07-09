@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 
 @Component
@@ -27,36 +29,16 @@ public class SearchRepositoryImpl {
     MongoConverter converter;
 
     public long getLikes(String name) {
-    	MongoDatabase database = client.getDatabase("manvsclass");
+        MongoDatabase database = client.getDatabase("manvsclass");
         MongoCollection<Document> collection = database.getCollection("interaction");
-        
-        AggregateIterable<Document> result = collection.aggregate(
-        	    Arrays.asList(
-        	        new Document("$search", 
-        	            new Document("text", 
-        	                new Document("query", name)
-        	                .append("path", Arrays.asList("name"))
-        	            )
-        	        ),
-        	        new Document("$match",
-        	            new Document("type", 1)
-        	        ),
-        	        new Document("$count", "count")
-        	    )
-        	);
-        long count =0;
-        if(result !=null) {
-        	Document firstResult = result.first();
-        	if (firstResult != null) {
-                count = ((Number) firstResult.get("count")).longValue();
-            }
-        }
-        else {
-        	count = 0;
-        }
+
+        Bson textSearch = Filters.text(name);
+        Bson typeFilter = Filters.eq("type", 1);
+
+        long count = collection.countDocuments(Filters.and(textSearch, typeFilter));
+
         return count;
     }
-    
     public List<interaction> findReport() {
 
         final List<interaction> posts = new ArrayList<>();
@@ -78,28 +60,16 @@ public class SearchRepositoryImpl {
     }
     
     public List<ClassUT> findByText(String text) {
-
-        final List<ClassUT> posts = new ArrayList<>();
-
         MongoDatabase database = client.getDatabase("manvsclass");
         MongoCollection<Document> collection = database.getCollection("ClassUT");
 
-        AggregateIterable<Document> result = collection.aggregate(
-            Arrays.asList(
-                new Document("$search", 
-                    new Document("text", 
-                        new Document("query", text)
-                        .append("path", Arrays.asList("name", "description"))
-                    )
-                )
-            )
-        );
+        Bson search = Filters.regex("name", ".*" + text + ".*", "i");
 
-        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+        List<ClassUT> posts = new ArrayList<>();
+        collection.find(search).forEach(doc -> posts.add(converter.read(ClassUT.class, doc)));
 
         return posts;
     }
-    
    
     
     public List<ClassUT> searchAndFilter(String text, String category) {
@@ -185,20 +155,14 @@ public class SearchRepositoryImpl {
         return posts;
     }
     
-        public List<ClassUT> filterByDifficulty(String difficulty) {
-
-        final List<ClassUT> posts = new ArrayList<>();
-
+    public List<ClassUT> filterByDifficulty(String difficulty) {
         MongoDatabase database = client.getDatabase("manvsclass");
         MongoCollection<Document> collection = database.getCollection("ClassUT");
 
-        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$search", 
-        	    new Document("index", "default")
-                .append("text", 
-        new Document("query", difficulty)
-                    .append("path", "difficulty")))));
+        Bson filter = Filters.eq("difficulty", difficulty);
 
-        result.forEach(doc -> posts.add(converter.read(ClassUT.class,doc)));
+        List<ClassUT> posts = new ArrayList<>();
+        collection.find(filter).forEach(doc -> posts.add(converter.read(ClassUT.class, doc)));
 
         return posts;
     }

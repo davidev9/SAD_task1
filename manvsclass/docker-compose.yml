@@ -1,0 +1,23 @@
+# Versione del Compose
+version: '3.12.12'
+
+# Servizi
+services:
+  # Servizio controller
+  controller:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo_db
+    volumes:
+      - /path/on/host:/path/on/container
+  # Servizio MongoDB
+  mongo_db:
+    image: "mongo:6.0.6"
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
