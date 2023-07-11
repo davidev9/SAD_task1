@@ -117,10 +117,12 @@ a:hover {
  <div class="container-fluid">
  
     
-<a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
-  <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"/>
+
+<a class="navbar-brand text-success" href="#"><svg xmlns="http://www.w3.org/2000/svg" class="text-primary" width="30" height="30" fill="currentColor" class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
 </svg></a>
-  <a class="navbar-brand" href="/home_adm.html">Admin Home</a>
+  <a class="navbar-brand" href="/home.html">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -133,8 +135,8 @@ a:hover {
           Sort By
         </a>
         <div class="dropdown-menu" aria-labelledby="sortByDropdown">
-          <a class="dropdown-item" href="/home_adm.html?parametro=1">Date</a>
-          <a class="dropdown-item" href="/home_adm.html?parametro=2">Name</a>
+          <a class="dropdown-item" href="/home.html?parametro=1">Date</a>
+          <a class="dropdown-item" href="/home.html?parametro=2">Name</a>
           
         </div>
       </li>
@@ -143,19 +145,14 @@ a:hover {
           Filter by Difficulty
         </a>
         <div class="dropdown-menu" aria-labelledby="filterDropdown">
-          <a class="dropdown-item" href="/home_adm.html?parametro=3">Beginner</a>
-          <a class="dropdown-item" href="/home_adm.html?parametro=4">Intermediate</a>
-          <a class="dropdown-item" href="/home_adm.html?parametro=5">Advanced</a>
+          <a class="dropdown-item" href="/home.html?parametro=3">Beginner</a>
+          <a class="dropdown-item" href="/home.html?parametro=4">Intermediate</a>
+          <a class="dropdown-item" href="/home.html?parametro=5">Advanced</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/uploadClasse.html">+ Add Class</a>
-      </li>
-	  <li class="nav-item">
-        <a class="nav-link" href="/Reports.html">View Reports</a>
-      </li>
+      
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="home_adm.html" method="get">
+    <form class="form-inline my-2 my-lg-0" action="home.html" method="get">
       <input class="form-control mr-sm-2" type="search" name = "parametro" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
@@ -220,15 +217,12 @@ else
 <a href="javascript:void(0);">
 <div class="hover">
 
-<button type="button" class="btn btn-light" onclick="window.location.href='modificaClasse.html?parametro=${home.name}'">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
-  </svg>
+<button type="button" class="btn btn-light" onclick="window.location.href='reportClasse.html?parametro=${home.name}'">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill text-danger" viewBox="0 0 16 16">
+  <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+</svg>
 </button>
-<button type="button" onclick="eliminaClasse('${home.name}')" class="btn btn-icon btn-danger">
-<i class="fa fa-trash"></i>
-</button>
-</button>
+
 </div>
 <br>
 <div class="icon">
@@ -240,7 +234,7 @@ else
 <div class="file-name">
 <p class="m-b-5 text-muted">${home.name}.java</p>
 
-<small class="date text-muted">${home.description}  </small>
+<small class="date text-muted">${home.description} ${home.level} </small>
 
 
 
@@ -256,8 +250,9 @@ else
 </svg>
                 Download
                            </button>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <span id="${home.name}" class="text-danger" ></span>
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  fill="currentColor" class="bi bi-heart text-danger" viewBox="0 0 16 16">
-  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" onclick="newLike('${home.name}')" fill="currentColor" class="bi bi-heart-fill text-danger" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
 </svg>
 
 
@@ -333,19 +328,7 @@ function downloadFile(name) {
 }
 
 
-function eliminaClasse(name) {
-  fetch(`/delete/${name}`, {
-    method: 'POST'
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Errore durante l\'eliminazione della classe.');
-    }
-    // gestisci la risposta del server
-    location.reload();
-  })
-  .catch(error => console.error(error));
-}
+
 
 
 function newLike(name) {
